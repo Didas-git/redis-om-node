@@ -5,6 +5,7 @@ import SortableFieldDefinition from "./sortable-field-definition";
 interface TextFieldDefinition extends BaseFieldDefinition, SortableFieldDefinition {
   /** Yep. It's searchable text. */
   type: 'text';
+  default?: string;
 }
 
 export default TextFieldDefinition;

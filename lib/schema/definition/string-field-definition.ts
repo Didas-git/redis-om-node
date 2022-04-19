@@ -6,6 +6,7 @@ import SortableFieldDefinition from "./sortable-field-definition";
 interface StringFieldDefinition extends BaseFieldDefinition, SortableFieldDefinition, SeparableFieldDefinition {
   /** Yep. It's a string. */
   type: 'string';
+  default?: string;
 }
 
 export default StringFieldDefinition;

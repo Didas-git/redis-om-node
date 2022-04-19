@@ -14,6 +14,10 @@ import FieldDefinition from './definition/field-definition';
 import JsonSchemaBuilder from './builders/json-schema-builder';
 import HashSchemaBuilder from './builders/hash-schema-builder';
 
+import Client from "../client";
+
+import { HashRepository, JsonRepository } from "../repository/repository";
+
 /**
  * Defines a schema that determines how an {@link Entity} is mapped to Redis
  * data structures. Construct by passing in an {@link EntityConstructor},
@@ -52,6 +56,7 @@ export default class Schema<TEntity extends Entity> {
   readonly definition: SchemaDefinition;
 
   private options?: SchemaOptions;
+  private client?: Client
 
   /**
    * @template TEntity The {@link Entity} this Schema defines.
@@ -129,9 +134,17 @@ export default class Schema<TEntity extends Entity> {
   }
 
   private defineProperties() {
-    Object.keys(this.definition).forEach(fieldName => {
+    Object.keys(this.definition).forEach(async (fieldName) => {
 
       const fieldDef: FieldDefinition = this.definition[fieldName];
+      if (fieldDef.default) {
+        if (!this.options?.client) throw new Error("Client was not passed in the schema options");
+        const repo = this.options.client.fetchRepository(this);
+        const ett = repo.createEntity({
+          [fieldName]: fieldDef.default
+        });
+        await repo.save(ett);
+      }
       const fieldAlias = fieldDef.alias ?? fieldName;
 
       this.validateFieldDef(fieldName, fieldDef);

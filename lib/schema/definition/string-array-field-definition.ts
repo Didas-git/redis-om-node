@@ -5,6 +5,7 @@ import SeparableFieldDefinition from "./separable-field-definition";
 interface StringArrayFieldDefinition extends BaseFieldDefinition, SeparableFieldDefinition {
   /** Yep. It's a string array. */
   type: 'array';
+  default?: Array<any>;
 }
 
 export default StringArrayFieldDefinition;

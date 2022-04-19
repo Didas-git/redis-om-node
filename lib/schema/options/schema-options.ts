@@ -1,3 +1,4 @@
+import Client from "../../client";
 import DataStructure from "./data-structure";
 import IdStrategy from "./id-strategy";
 import StopWordOptions from "./stop-word-options";
@@ -54,6 +55,8 @@ type SchemaOptions = {
    * anything other than `CUSTOM`, this option is ignored.
    */
   stopWords?: Array<string>
+
+  client?: Client
 }
 
 export default SchemaOptions;

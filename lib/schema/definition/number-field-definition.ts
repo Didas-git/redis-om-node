@@ -5,6 +5,7 @@ import SortableFieldDefinition from "./sortable-field-definition";
 interface NumberFieldDefinition extends BaseFieldDefinition, SortableFieldDefinition {
   /** Yep. It's a number. */
   type: 'number';
+  default?: number;
 }
 
 export default NumberFieldDefinition;

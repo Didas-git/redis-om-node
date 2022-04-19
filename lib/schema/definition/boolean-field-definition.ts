@@ -5,6 +5,7 @@ import SortableFieldDefinition from "./sortable-field-definition";
 interface BooleanFieldDefinition extends BaseFieldDefinition, SortableFieldDefinition {
   /** Yep. It's a boolean. */
   type: 'boolean';
+  default?: boolean;
 }
 
 export default BooleanFieldDefinition;
