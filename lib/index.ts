@@ -2,6 +2,7 @@ import Client, { SearchDataStructure, RedisHashData, RedisJsonData } from "./cli
 
 import { integer, Integer } from "./entity/integer";
 import { float, Float } from "./entity/float";
+import { Tuple } from "./tuple-helper-type";
 
 import Point from "./entity/point";
 import Entity from "./entity/entity";
@@ -81,5 +82,6 @@ export {
   integer,
   Integer,
   float,
-  Float
+  Float,
+  Tuple
 };
