@@ -3,8 +3,9 @@ import EntityValue from "../entity-value";
 
 class EntityNumberField extends EntityField {
   fromRedisHash(value: string) {
-    if (Number.isNaN(value)) throw Error(`Non-numeric value of '${value}' read from Redis for number field.`);
-    this.value = value;
+    const number = Number(value)
+    if (Number.isNaN(number)) throw Error(`Non-numeric value of '${value}' read from Redis for number field.`);
+    this.value = number;
   }
 
   protected valdiateValue(value: EntityValue) {
