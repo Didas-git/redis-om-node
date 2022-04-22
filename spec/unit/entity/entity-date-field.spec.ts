@@ -1,6 +1,6 @@
 import { FieldDefinition } from "../../../lib";
 import EntityDateField from "../../../lib/entity/fields/entity-date-field";
-import { A_DATE, A_DATE_EPOCH, A_DATE_EPOCH_STRING, A_DATE_ISO, A_NUMBER, A_POINT, A_STRING, SOME_STRINGS } from "../../helpers/example-data";
+import { A_DATE, A_DATE_EPOCH, A_DATE_EPOCH_STRING, A_DATE_ISO, A_POINT, SOME_STRINGS } from "../../helpers/example-data";
 
 const FIELD_NAME = 'foo';
 const FIELD_DEF: FieldDefinition = { type: 'date' };
@@ -73,7 +73,7 @@ describe("EntityDateField", () => {
       beforeEach(() => {
         field.value = A_DATE; // set it to something else first
         field.value = null;
-        });
+      });
       it("has the expected value", () => expect(field.value).toBeNull());
       it("converts to the expected Redis JSON data", () => expect(field.toRedisJson()).toEqual(EXPECTED_NULL_JSON_DATA));
       it("converts to the expected Redis Hash data", () => expect(field.toRedisHash()).toEqual(EXPECTED_NULL_HASH_DATA));

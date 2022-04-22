@@ -1,3 +1,4 @@
+import { Float, Integer } from "../../lib";
 import Point from "../../lib/entity/point";
 
 export const A_STRING = 'foo';
@@ -10,6 +11,12 @@ export const SOME_MORE_TEXT = "How vexingly quick daft zebras jump!";
 
 export const A_NUMBER = 42;
 export const A_NUMBER_STRING = A_NUMBER.toString();
+
+export const A_INTEGER = Integer(42);
+export const A_INTEGER_STRING = A_INTEGER.toString();
+
+export const A_FLOAT = Float(42.5);
+export const A_FLOAT_STRING = A_FLOAT.toString();
 
 export const ANOTHER_NUMBER = 23;
 export const ANOTHER_NUMBER_STRING = ANOTHER_NUMBER.toString();

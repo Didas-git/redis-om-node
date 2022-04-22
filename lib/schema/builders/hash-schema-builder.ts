@@ -11,7 +11,7 @@ export default class HashSchemaBuilder<TEntity extends Entity> extends SchemaBui
     const fieldDef: FieldDefinition = this.schema.definition[field];
     const fieldType: SchemaFieldType = fieldDef.type;
     const fieldAlias = fieldDef.alias ?? field
-    let fieldDetails: Array<string>;
+    let fieldDetails: Array<string> = [];
 
     switch (fieldType) {
       case 'date':
@@ -34,6 +34,12 @@ export default class HashSchemaBuilder<TEntity extends Entity> extends SchemaBui
         break;
       case 'text':
         fieldDetails = this.buildSortableText(fieldDef as SortableFieldDefinition);
+        break;
+      case 'integer':
+        fieldDetails = this.buildSortableNumeric(fieldDef as SortableFieldDefinition);
+        break;
+      case 'float':
+        fieldDetails = this.buildSortableNumeric(fieldDef as SortableFieldDefinition);
         break;
     };
 

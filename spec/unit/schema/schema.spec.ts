@@ -35,7 +35,9 @@ describe("Schema", () => {
       aBoolean: { type: 'boolean' }, anotherBoolean: { type: 'boolean' },
       aPoint: { type: 'point' }, anotherPoint: { type: 'point' },
       aDate: { type: 'date' }, anotherDate: { type: 'date' },
-      someStrings: { type: 'array' }, someOtherStrings: { type: 'array' }
+      someStrings: { type: 'array' }, someOtherStrings: { type: 'array' },
+      aInteger: { type: 'integer' }, anotherInteger: { type: 'integer' },
+      aFloat: { type: 'float' }, anotherFloat: { type: 'float' }
     }));
 
     it("generates the index hash", () => expect(schema.indexHash).toBe("ksCGXvPQbQNDCDCJF01NE4kZLsM="));

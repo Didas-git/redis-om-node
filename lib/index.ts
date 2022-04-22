@@ -1,5 +1,8 @@
 import Client, { SearchDataStructure, RedisHashData, RedisJsonData } from "./client";
 
+import { integer, Integer } from "./entity/integer";
+import { float, Float } from "./entity/float";
+
 import Point from "./entity/point";
 import Entity from "./entity/entity";
 import EntityData from "./entity/entity-data";
@@ -19,6 +22,8 @@ import TextFieldDefinition from "./schema/definition/text-field-definition";
 import DateFieldDefinition from "./schema/definition/date-field-definition";
 import PointFieldDefinition from "./schema/definition/point-field-definition";
 import StringArrayFieldDefinition from "./schema/definition/string-array-field-definition";
+import IntegerFieldDefinition from "./schema/definition/integer-field-definition";
+import FloatFieldDefinition from "./schema/definition/float-field-definition";
 
 import SchemaOptions from "./schema/options/schema-options";
 import DataStructure from "./schema/options/data-structure";
@@ -35,13 +40,46 @@ import { Circle, CircleFunction } from "./search/where-point";
 
 
 export {
-  Client, SearchDataStructure, RedisHashData, RedisJsonData,
-  Entity, EntityData, EntityValue, EntityConstructor,
-  RedisError, Repository,
-  Schema, SchemaDefinition, Point,
-  FieldDefinition as FieldDefinition,
-  SchemaOptions, DataStructure, IdStrategy, StopWordOptions,
-  BaseFieldDefinition as Field, SortableFieldDefinition as Sortable, SeparableFieldDefinition as Separable, BooleanFieldDefinition as BooleanField, DateFieldDefinition as DateField, NumberFieldDefinition as NumberField, PointFieldDefinition as PointField, StringFieldDefinition as StringField, StringArrayFieldDefinition as StringArrayField, TextFieldDefinition as TextField,
-  AbstractSearch, Search, RawSearch, SubSearchFunction,
-  Where, WhereField, Circle, CircleFunction
+  Client,
+  SearchDataStructure,
+  RedisHashData,
+  RedisJsonData,
+  Entity,
+  EntityData,
+  EntityValue,
+  EntityConstructor,
+  RedisError,
+  Repository,
+  Schema,
+  SchemaDefinition,
+  Point,
+  FieldDefinition,
+  SchemaOptions,
+  DataStructure,
+  IdStrategy,
+  StopWordOptions,
+  BaseFieldDefinition as Field,
+  SortableFieldDefinition as Sortable,
+  SeparableFieldDefinition as Separable,
+  BooleanFieldDefinition as BooleanField,
+  DateFieldDefinition as DateField,
+  NumberFieldDefinition as NumberField,
+  PointFieldDefinition as PointField,
+  StringFieldDefinition as StringField,
+  StringArrayFieldDefinition as StringArrayField,
+  TextFieldDefinition as TextField,
+  IntegerFieldDefinition as IntegerField,
+  FloatFieldDefinition as FloatField,
+  AbstractSearch,
+  Search,
+  RawSearch,
+  SubSearchFunction,
+  Where,
+  WhereField,
+  Circle,
+  CircleFunction,
+  integer,
+  Integer,
+  float,
+  Float
 };

@@ -40,6 +40,12 @@ export default class JsonSchemaBuilder<TEntity extends Entity> extends SchemaBui
       case 'text':
         fieldDetails = this.buildSortableText(fieldDef as SortableFieldDefinition)
         break;
+      case 'integer':
+        fieldDetails = this.buildSortableNumeric(fieldDef as SortableFieldDefinition);
+        break;
+      case 'float':
+        fieldDetails = this.buildSortableNumeric(fieldDef as SortableFieldDefinition);
+        break;
     }
 
     return [fieldPath, 'AS', fieldAlias, ...fieldDetails];

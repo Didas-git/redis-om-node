@@ -163,7 +163,7 @@ export default class Schema<TEntity extends Entity> {
   }
 
   private validateFieldDef(field: string, fieldDef: FieldDefinition) {
-    if (!['boolean', 'date', 'number', 'point', 'string', 'array', 'text'].includes(fieldDef.type))
+    if (!['boolean', 'date', 'number', 'point', 'string', 'array', 'text', 'float', 'integer'].includes(fieldDef.type))
       throw Error(`The field '${field}' is configured with a type of '${fieldDef.type}'. Valid types include 'boolean', 'date', 'number', 'point', 'string', 'array', and 'text'.`);
   }
 }

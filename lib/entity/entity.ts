@@ -8,6 +8,8 @@ import EntityPointField from "./fields/entity-point-field";
 import EntityStringArrayField from "./fields/entity-string-array-field";
 import EntityStringField from "./fields/entity-string-field";
 import EntityTextField from "./fields/entity-text-field";
+import EntityIntegerField from "./fields/entity-integer-field";
+import EntityFloatField from "./fields/entity-float-field";
 import EntityFieldConstructor from "./fields/entity-field-constructor";
 import Schema from "../schema/schema";
 import SchemaDefinition from "../schema/definition/schema-definition";
@@ -22,7 +24,9 @@ const ENTITY_FIELD_CONSTRUCTORS: Record<SchemaFieldType, EntityFieldConstructor>
   'text': EntityTextField,
   'date': EntityDateField,
   'point': EntityPointField,
-  'array': EntityStringArrayField
+  'array': EntityStringArrayField,
+  'integer': EntityIntegerField,
+  'float': EntityFloatField
 }
 
 /**

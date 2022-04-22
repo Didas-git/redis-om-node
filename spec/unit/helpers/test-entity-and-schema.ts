@@ -1,6 +1,7 @@
 import Entity from '../../../lib/entity/entity';
 import Schema from '../../../lib/schema/schema';
 import Point from '../../../lib/entity/point';
+import { float, integer } from "../../../lib";
 
 export class SimpleEntity extends Entity { }
 export class SimpleHashEntity extends SimpleEntity { }
@@ -14,6 +15,8 @@ export interface SimpleEntity {
   aPoint?: Point | null;
   aDate?: Date | string | number | null;
   someStrings?: any[] | null;
+  aInteger?: integer | null;
+  aFloat?: float | null;
 }
 
 export interface SimpleHashEntity extends SimpleEntity { }
@@ -31,6 +34,8 @@ export interface AliasedEntity {
   aPoint?: Point | null;
   aDate?: Date | null;
   someStrings?: Array<string> | null;
+  aInteger?: integer | null;
+  aFloat?: float | null;
 }
 
 export const simpleSchema = new Schema(SimpleEntity, {
@@ -40,7 +45,9 @@ export const simpleSchema = new Schema(SimpleEntity, {
   aBoolean: { type: 'boolean' },
   aPoint: { type: 'point' },
   aDate: { type: 'date' },
-  someStrings: { type: 'array' }
+  someStrings: { type: 'array' },
+  aInteger: { type: 'integer' },
+  aFloat: { type: 'float' }
 });
 
 export const simpleHashSchema = new Schema(SimpleHashEntity, {
@@ -50,7 +57,9 @@ export const simpleHashSchema = new Schema(SimpleHashEntity, {
   aBoolean: { type: 'boolean' },
   aPoint: { type: 'point' },
   aDate: { type: 'date' },
-  someStrings: { type: 'array' }
+  someStrings: { type: 'array' },
+  aInteger: { type: 'integer' },
+  aFloat: { type: 'float' }
 }, {
   dataStructure: 'HASH'
 });
@@ -62,7 +71,9 @@ export const simpleSortableHashSchema = new Schema(SimpleHashEntity, {
   aBoolean: { type: 'boolean', sortable: true },
   aPoint: { type: 'point' },
   aDate: { type: 'date', sortable: true },
-  someStrings: { type: 'array' }
+  someStrings: { type: 'array' },
+  aInteger: { type: 'integer', sortable: true },
+  aFloat: { type: 'float', sortable: true }
 }, {
   dataStructure: 'HASH'
 });
@@ -74,7 +85,9 @@ export const simpleJsonSchema = new Schema(SimpleJsonEntity, {
   aBoolean: { type: 'boolean' },
   aPoint: { type: 'point' },
   aDate: { type: 'date' },
-  someStrings: { type: 'array' }
+  someStrings: { type: 'array' },
+  aInteger: { type: 'integer' },
+  aFloat: { type: 'float' }
 }, {
   dataStructure: 'JSON'
 });
@@ -86,7 +99,9 @@ export const simpleSortableJsonSchema = new Schema(SimpleHashEntity, {
   aBoolean: { type: 'boolean', sortable: true },
   aPoint: { type: 'point' },
   aDate: { type: 'date', sortable: true },
-  someStrings: { type: 'array' }
+  someStrings: { type: 'array' },
+  aInteger: { type: 'integer', sortable: true },
+  aFloat: { type: 'float', sortable: true }
 }, {
   dataStructure: 'JSON'
 });
@@ -98,7 +113,9 @@ export const aliasedSchema = new Schema(AliasedEntity, {
   aBoolean: { type: 'boolean', alias: 'anotherBoolean' },
   aPoint: { type: 'point', alias: 'anotherPoint' },
   aDate: { type: 'date', alias: 'anotherDate' },
-  someStrings: { type: 'array', alias: 'someOtherStrings' }
+  someStrings: { type: 'array', alias: 'someOtherStrings' },
+  aInteger: { type: 'integer', alias: 'anotherInteger' },
+  aFloat: { type: 'float', alias: 'anotherFloat' }
 });
 
 export const stopWordsOffSchema = new Schema(StopWordsOffEntity, {
