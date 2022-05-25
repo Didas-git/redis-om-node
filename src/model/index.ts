@@ -14,8 +14,4 @@ export default class Model {
             this[key] = this.schema.methods[key];
         });
     }
-
-    public x(): string {
-        return "dv";
-    }
 }

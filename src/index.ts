@@ -25,10 +25,3 @@ type mappi<T extends SchemaDefinition> = {
 type map<T extends keyof SchemaMap> = {
     [K in keyof T]: SchemaMap[T]
 }
-
-function returnType<T extends SchemaDefinition>(t: T): mappi<T> {
-    return t
-}
-
-const f = returnType(t).toString()
-type s = typeof f
