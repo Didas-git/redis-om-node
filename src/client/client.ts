@@ -2,7 +2,6 @@ import { createClient } from "redis";
 import { URLObject, RedisJSON } from "./typings";
 import { MapSchema, Schema, SchemaDefinition } from "../schema";
 import { Model } from "../model/model";
-import { types } from "../privates/symbols";
 
 export class Client {
     #client?: ReturnType<typeof createClient>;
@@ -42,18 +41,18 @@ export class Client {
         return this;
     }
 
-    public schema<T extends SchemaDefinition>(schemaData: T) {
+    public schema<T extends SchemaDefinition>(schemaData: T): Schema<T> {
         return new Schema<T>(schemaData);
     }
 
-    public model<T extends Schema<SchemaDefinition>>(name: string, schema?: T) {
-        if (this.#models.has(name)) return <Model<T> & MapSchema<T>>this.#models.get(name)!;
+    public model<T extends Schema<SchemaDefinition>>(name: string, schema?: T): Model<T> & MapSchema<T> {
+        if (this.#models.has(name)) return <any>this.#models.get(name)!;
 
         if (!schema) throw new Error("You have to pass a schema if it doesnt exist");
 
-        const model = new Model(schema)[types]();
+        const model = new Model(schema);
         this.#models.set(name, model);
-        return model;
+        return <any>model;
     }
 }
 

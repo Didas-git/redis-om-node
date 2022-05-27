@@ -1,5 +1,5 @@
-import { MapSchema, Schema, SchemaDefinition } from "../schema";
-import { methods, types } from "../privates/symbols";
+import { Schema, SchemaDefinition } from "../schema";
+import { methods } from "../privates/symbols";
 // import { Client } from "../client/client";
 
 export class Model<T extends Schema<SchemaDefinition>> {
@@ -24,11 +24,4 @@ export class Model<T extends Schema<SchemaDefinition>> {
     //         this[key] = key;
     //     })
     // }
-
-    /**
-     * Helper function for typescript types
-     */
-    [types](): this & MapSchema<T> {
-        return <any>this
-    }
 }
