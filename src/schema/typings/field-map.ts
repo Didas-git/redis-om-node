@@ -1,4 +1,7 @@
+import { schemaData } from "../../privates/symbols";
+import { Schema } from "../schema";
 import { Point } from "./point";
+import { SchemaDefinition } from "./schema-definition";
 
 export interface FieldMap {
     string: string;
@@ -10,6 +13,6 @@ export interface FieldMap {
     array: Array<string | number | boolean>
 }
 
-export type MapSchema<T extends Record<string, Record<string, keyof FieldMap>>> = {
-    [K in keyof T]: FieldMap[T[K]["type"]]
+export type MapSchema<T extends Schema<SchemaDefinition>> = {
+    [K in keyof T[typeof schemaData]]: FieldMap[T[typeof schemaData][K]["type"]]
 }
