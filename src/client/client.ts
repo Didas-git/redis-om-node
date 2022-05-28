@@ -1,7 +1,7 @@
 import { createClient } from "redis";
-import { URLObject, RedisJSON } from "./typings";
-import { MapSchema, Schema, SchemaDefinition } from "../schema";
 import { Model } from "../model/model";
+import { Schema, SchemaDefinition } from "../schema";
+import { URLObject } from "./typings";
 
 export class Client {
     #client?: ReturnType<typeof createClient>;
@@ -23,10 +23,6 @@ export class Client {
         return this;
     }
 
-    public async jsonSet(key: string, path: string, json: RedisJSON, options?: { NX: true } | { XX: true }): Promise<"OK" | undefined | null> {
-        return await this.#client?.json.set(key, path, json, options);
-    }
-
     public async disconnect(): Promise<Client> {
         await this.#client?.quit();
 
@@ -45,7 +41,7 @@ export class Client {
         return new Schema<T>(schemaData);
     }
 
-    public model<T extends Schema<SchemaDefinition>>(name: string, schema?: T): Model<T> & MapSchema<T> {
+    public model<T extends Schema<SchemaDefinition>>(name: string, schema?: T): Model<T> {
         if (this.#models.has(name)) return <any>this.#models.get(name)!;
 
         if (!schema) throw new Error("You have to pass a schema if it doesnt exist");
@@ -58,8 +54,12 @@ export class Client {
 
 // (async () => {
 //     const client = await new Client().connect();
-//     await client.jsonSet("t", "$", { d: "t" });
 //     await client.disconnect();
 //     const userSchema = client.schema({ name: { type: "string" }, age: { type: "number" } });
 //     const userModel = client.model("User", userSchema);
+//     userSchema.methods({
+//         async findByName(this: any) {
+//             return this.query()
+//         }
+//     })
 // })()

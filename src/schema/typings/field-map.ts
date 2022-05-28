@@ -1,5 +1,3 @@
-import { schemaData } from "../../privates/symbols";
-import { Schema } from "../schema";
 import { Point } from "./point";
 import { SchemaDefinition } from "./schema-definition";
 
@@ -10,9 +8,11 @@ export interface FieldMap {
     text: string;
     date: Date;
     point: Point;
-    array: Array<string | number | boolean>
+    array: Array<string | number | boolean>;
+    tuple: [any]
+    object: Record<string, SchemaDefinition>;
 }
 
-export type MapSchema<T extends Schema<SchemaDefinition>> = {
-    [K in keyof T[typeof schemaData]]: FieldMap[T[typeof schemaData][K]["type"]]
-}
+// export type MapSchema<T extends Schema<SchemaDefinition>> = {
+//     [K in keyof T[typeof schemaData]]: FieldMap[T[typeof schemaData][K]["type"]]
+// }

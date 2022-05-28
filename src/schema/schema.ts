@@ -1,13 +1,9 @@
 import { SchemaDefinition } from "./typings";
-import { defaults, methods, schemaData } from "../privates/symbols";
+import { methods, schemaData } from "../privates/symbols";
 
 export class Schema<K extends SchemaDefinition> {
 
     [methods] = {};
-    /**
-     * string is the key of the schema defenition
-     */
-    [defaults]: Record<string, any> = {};
     [schemaData]: K;
 
     public constructor(data: K) {
@@ -21,7 +17,8 @@ export class Schema<K extends SchemaDefinition> {
     /**
      * for **typescript** users: `this` has to be overriten so it actually works. I couldn't find a work arround as of yet but im open to suggestions.
      */
-    public methods<T extends unknown>(): Record<keyof T, T[keyof T]> {
+    public methods<T extends Record<string, () => unknown>>(data: T): T {
+        this[methods] = { ...this[methods], ...data };
         return <any>this[methods]
     }
 }
