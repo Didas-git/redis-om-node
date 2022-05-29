@@ -1,4 +1,4 @@
-import { SchemaDefinition } from "./typings";
+import { SchemaDefinition, SchemaOptions } from "./typings";
 import { methods, schemaData } from "../privates/symbols";
 
 export class Schema<K extends SchemaDefinition> {
@@ -6,7 +6,7 @@ export class Schema<K extends SchemaDefinition> {
     [methods] = {};
     [schemaData]: K;
 
-    public constructor(data: K) {
+    public constructor(data: K, public readonly options?: SchemaOptions) {
         this[schemaData] = data;
     }
 

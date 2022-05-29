@@ -1,2 +1,2 @@
 export * from "./url-object";
-export * from "./redis-json"
+export * from "./redis-client";

@@ -42,7 +42,7 @@ interface PointField extends BaseField {
 
 interface ArrayField extends BaseField {
     type: "array";
-    elements?: any;
+    elements?: keyof FieldMap;
 }
 
 interface TupleField extends BaseField {
@@ -52,5 +52,5 @@ interface TupleField extends BaseField {
 
 interface ObjectField extends BaseField {
     type: "object";
-    data?: {};
+    data?: SchemaDefinition;
 }

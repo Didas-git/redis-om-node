@@ -1,10 +1,10 @@
 import { createClient } from "redis";
 import { Model } from "../model/model";
 import { Schema, SchemaDefinition } from "../schema";
-import { URLObject } from "./typings";
+import { URLObject, RedisClient } from "./typings";
 
 export class Client {
-    #client?: ReturnType<typeof createClient>;
+    #client?: RedisClient;
     #isOpen: boolean = false;
     #models: Map<string, Model<any>> = new Map();
 
@@ -46,7 +46,7 @@ export class Client {
 
         if (!schema) throw new Error("You have to pass a schema if it doesnt exist");
 
-        const model = new Model(schema);
+        const model = new Model(schema, this.#client);
         this.#models.set(name, model);
         return <any>model;
     }

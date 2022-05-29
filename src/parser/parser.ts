@@ -3,7 +3,8 @@
 SchemaDefinition = Record<string, {type: string | number | boolean | text | date | point | array}>
 */
 
-import { FieldMap, SchemaDefinition } from "src/schema";
+import { schemaData } from "src/privates/symbols";
+import { Schema, FieldMap, SchemaDefinition } from "src/schema";
 /*
 schemaData: {
     name: {
@@ -24,7 +25,7 @@ schemaData: {
 
     age2: {
         type: "tuple",
-        elements: ["array", {ob: {type: "number"}}],
+        elements: [{ type: "array", elements: "number" }, { ob: { type: "tuple", elements: [{ id: { type: "object", data: { t: "number" } } }] } }]
     }
 }
 
@@ -40,62 +41,106 @@ default: {
     name: "D"
 }
 
-required: {
-
-}
+required: {}
 */
 
-export function parseType<T extends SchemaDefinition>(schema: T) {
-    let typeObject = <any>{};
-    for (const key in schema) {
-        const value = schema[key]!;
-        let type: keyof FieldMap;
-        if (typeof value === "object") {
-            type = value.type;
+// export class Parser<T extends SchemaDefinition> {
+//     private schemaData: SchemaDefinition;
 
-            if (type === "object")
-                typeObject[key] = parseType(value.data);
-            else if (type === "array")
-                typeObject[key] = [undefined, value.elements];
-            else if (type === "tuple") {
-                typeObject[key] = value.elements.map((el: keyof FieldMap | SchemaDefinition) => {
-                    if (typeof el === "string")
-                        return el;
-                    else
-                        return parseType(el);
-                });
-            } else typeObject[key] = type;
-        } else {
-            type = value;
+//     public constructor(schema: T) {
+//         this.schemaData = schema
+//     }
 
-            if (type === "object" || type === "tuple")
-                throw new Error("You fucking moron. Those types have unique properties which are entirely required. You imbecile. Unacceptable.");
+//     public parseType<T extends SchemaDefinition>(s?: T) {
+//         let result = <any>{};
+//         const schema = s ?? this.schemaData;
+//         Object.keys(schema).forEach((key, value) => {
+//             if (typeof value === "object") {
+//                 if (value.type === "object")
+//                     result[key] = value.data === undefined ? "object" : this.parseType(value.data)
+//                 else if (value.type === "array") {
+//                     if (!value.elements) throw new Error("No elements defined")
+//                     result[key] = [undefined, value.elements];
+//                 }
+//                 else if (value.type === "tuple") {
+//                     result[key] = value.elements.map((el: keyof FieldMap | SchemaDefinition) => {
+//                         if (typeof el === "string")
+//                             return el;
+//                         else
+//                             return this.parseType(el);
+//                     });
+//                 } else result[key] = value.type;
+//             } else {
+//                 //@ts-expect-error Anti-JS
+//                 if (value === "object" || value === "tuple")
+//                     throw new Error("You fucking moron. Those types have unique properties which are entirely required. You imbecile. Unacceptable.");
 
-            typeObject[key] = type;
-        }
-    };
-    return typeObject;
-}
+//                 result[key] = value;
+//             }
+//         });
+//         return result;
+//     }
+// }
 
-console.log(JSON.stringify(parseType({
-    name: {
+// export function parseDefaultValues<T extends SchemaDefinition>(schema: T) {
+//     let result = <any>{};
+//     for (const key in schema) {
+//         const value = schema[key];
+//         let defaultValue: any;
+//         if (typeof value === "object") {
+//             defaultValue = value.default;
+//             if ((value.type === "array" || value.type === "tuple" || value.type === "object") && defaultValue !== undefined)
+//                 throw new Error("deez");
+//             if (value.type === "object")
+//                 defaultValue = parseDefaultValues(value.data);
+//             if (defaultValue !== undefined)
+//                 result[key] = defaultValue;
+//         }
+//     };
+//     return result;
+// }
+
+// export function parseRequiredValues<T extends SchemaDefinition>(schema: T) {
+//     let result = <any>{};
+//     for (const key in schema) {
+//         const value = schema[key];
+//         let required: boolean;
+//         if (typeof value === "object") {
+//             if (value.type === "object")
+//                 required = parseRequiredValues(value.data);
+//             else
+//                 required = value.required ?? false;
+//             result[key] = required;
+//         }
+//     };
+//     return result;
+// }
+
+const parser = new Parser({
+    obj: {
         type: "object",
-        default: "D",
-        required: true,
         data: {
-            ifk: { type: "string" }
+            name: {
+                type: "string",
+                default: "DD"
+            },
+            age: {
+                type: "number",
+                required: true
+            },
+            email: {
+                type: "string",
+                default: "d@d.com"
+            }
         }
     },
-
-    tongue: "string",
-
-    age: {
+    arr: {
         type: "array",
         elements: "string"
     },
+    t: { type: "string", default: undefined, required: false }
+})
 
-    age2: {
-        type: "tuple",
-        elements: [{ type: "array", elements: "number" }, { ob: { type: "tuple", elements: [{ id: { type: "object", data: { t: "number" } } }] } }],
-    }
-})))
+parser.parseType();
+parseDefaultValues(parser.schemaData);
+parseRequiredValues(parser.schemaData);
