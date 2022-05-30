@@ -1,7 +1,7 @@
-import { Schema, SchemaDefinition } from "../schema";
+import { SchemaDefinition } from "../schema";
 
 export class Document<T extends SchemaDefinition> {
-    public constructor(data: T) { }
+    public constructor(public data: T) { }
 
 
 }

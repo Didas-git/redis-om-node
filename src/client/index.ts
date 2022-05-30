@@ -1,2 +1,2 @@
 export * from "./typings";
-export * from "./schema";
+export * from "./client";

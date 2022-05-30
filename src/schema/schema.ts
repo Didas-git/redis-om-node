@@ -15,7 +15,7 @@ export class Schema<K extends SchemaDefinition> {
     }
 
     /**
-     * for **typescript** users: `this` has to be overriten so it actually works. I couldn't find a work arround as of yet but im open to suggestions.
+     * for **typescript** users: `this` has to be overwritten so it actually works. I couldn't find a work around as of yet but im open to suggestions.
      */
     public methods<T extends Record<string, () => unknown>>(data: T): T {
         this[methods] = { ...this[methods], ...data };

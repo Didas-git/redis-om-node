@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "rm -rf ./dist && tsc --project ./"
+    "build": "rm -rf ./dist && tsc"
   },
   "repository": "github:redis/redis-om-node",
   "homepage": "https://github.com/redis/redis-om-node#readme",

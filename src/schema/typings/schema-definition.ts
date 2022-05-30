@@ -5,52 +5,52 @@ export type SchemaDefinition = Record<string, keyof Omit<FieldMap, "object" | "t
 
 export type FieldTypes = StringField | NumberField | BooleanField | TextField | DateField | PointField | ArrayField | TupleField | ObjectField;
 
-interface BaseField {
+export interface BaseField {
     type: keyof FieldMap;
-    required?: boolean;
+    required?: boolean | undefined;
 }
 
-interface StringField extends BaseField {
+export interface StringField extends BaseField {
     type: "string";
     default?: string;
 }
 
-interface NumberField extends BaseField {
+export interface NumberField extends BaseField {
     type: "number";
     default?: number;
 }
 
-interface BooleanField extends BaseField {
+export interface BooleanField extends BaseField {
     type: "boolean";
     default?: boolean;
 }
 
-interface TextField extends BaseField {
+export interface TextField extends BaseField {
     type: "text";
     default?: string;
 }
 
-interface DateField extends BaseField {
+export interface DateField extends BaseField {
     type: "date";
     default?: Date;
 }
 
-interface PointField extends BaseField {
+export interface PointField extends BaseField {
     type: "point";
     default?: Point;
 }
 
-interface ArrayField extends BaseField {
+export interface ArrayField extends BaseField {
     type: "array";
-    elements?: keyof FieldMap;
+    elements?: keyof FieldMap | undefined;
 }
 
-interface TupleField extends BaseField {
+export interface TupleField extends BaseField {
     type: "tuple";
     elements: any;
 }
 
-interface ObjectField extends BaseField {
+export interface ObjectField extends BaseField {
     type: "object";
-    data?: SchemaDefinition;
+    data?: SchemaDefinition | undefined;
 }

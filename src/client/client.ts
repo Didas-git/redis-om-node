@@ -7,11 +7,13 @@ export class Client {
     #client?: RedisClient;
     #isOpen: boolean = false;
     #models: Map<string, Model<any>> = new Map();
+    static t = "";
 
     public async connect(url: string | URLObject = "redis://localhost:6379"): Promise<Client> {
         if (this.#isOpen) return this;
 
         if (typeof url === "object") {
+
             const { username, password, entrypoint, port } = url;
             url = `${username}:${password}@${(/:\d$/).exec(entrypoint) ? entrypoint : `${entrypoint}:${port}`}`;
         }
@@ -46,7 +48,7 @@ export class Client {
 
         if (!schema) throw new Error("You have to pass a schema if it doesnt exist");
 
-        const model = new Model(schema, this.#client);
+        const model = new Model(schema, this.#client!);
         this.#models.set(name, model);
         return <any>model;
     }
