@@ -6,13 +6,8 @@ import { inspect } from "util";
     const userSchema = client.schema({
         name: "string",
         age: "number",
-        address: {
-            type: "object",
-            data: {
-                city: "string",
-                postalCode: "string"
-            }
-        }
+        //@ts-ignore
+        address: "object"
     });
 
     const userModel = client.model("User", userSchema);

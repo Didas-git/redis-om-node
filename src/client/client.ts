@@ -1,5 +1,5 @@
 import { createClient } from "redis";
-import { Model } from "../model/model";
+import { Model } from "../model";
 import { Schema, SchemaDefinition } from "../schema";
 import { URLObject, RedisClient } from "./typings";
 
@@ -7,7 +7,6 @@ export class Client {
     #client?: RedisClient;
     #isOpen: boolean = false;
     #models: Map<string, Model<any>> = new Map();
-    static t = "";
 
     public async connect(url: string | URLObject = "redis://localhost:6379"): Promise<Client> {
         if (this.#isOpen) return this;
@@ -53,15 +52,3 @@ export class Client {
         return <any>model;
     }
 }
-
-// (async () => {
-//     const client = await new Client().connect();
-//     await client.disconnect();
-//     const userSchema = client.schema({ name: { type: "string" }, age: { type: "number" } });
-//     const userModel = client.model("User", userSchema);
-//     userSchema.methods({
-//         async findByName(this: any) {
-//             return this.query()
-//         }
-//     })
-// })()

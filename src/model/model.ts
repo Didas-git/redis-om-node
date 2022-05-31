@@ -5,48 +5,51 @@ import { schemaData } from "../privates/symbols";
 
 export class Model<T extends Schema<SchemaDefinition>> {
     private readonly schema: T;
-
+    private parsed: SchemaDefinition;
     public constructor(data: T, private readonly client: RedisClient) {
         this.schema = data;
+        this.parsed = Model.parse(this.schema[schemaData])
     }
 
     public create() {
-        return new Document(Model.parse(this.schema[schemaData]));
+        const doc = new Document();
+        Object.keys(this.parsed).forEach((key) => {
+            Object.defineProperty(doc, key, {
+                configurable: true,
+                get: function (): unknown {
+                    return this[key]
+                },
+
+                set: function (value: unknown) {
+                    this[key] = value
+                }
+            })
+        })
+
+        return doc
     }
 
-    public save(doc: Document<SchemaDefinition>) {
+    public save(doc: Document) {
         if (!this.schema.options || this.schema.options === "JSON")
             //@ts-ignore JS Shenanigans
             this.client.json.set(this.schema.costructor.name, "$", JSON.parse(doc.toString()))
         else if (this.schema.options === "HASH")
             this.client.hSet(this.schema.constructor.name, "$", doc.toString());
-
     }
-
-    // private static parse<T extends SchemaDefinition>(schema: T): T {
-    //     Object.keys(schema).forEach((key) => {
-    //         let value = schema[key]!;
-    //         if (typeof value === "string")
-    //             value = <FieldTypes>{type: value, required: false, default: undefined};
-    //         const keys = Object.keys(value);
-    //         if (!("required" in keys))
-    //             value.required = false;
-    //         if (!("default" in keys))
-    //             value.default = undefined;
-    //         if (value.type === "object")
-    //             value.data = Model.parse(value.data);
-    //         schema[key] = value
-    //     })
-    //     return schema;
-    // }
-
 
     private static parse<T extends SchemaDefinition>(schema: T): T {
         Object.keys(schema).forEach((key) => {
             let value: SchemaDefinition[string] = schema[key]!;
             if (typeof value === "string") {
                 //@ts-expect-error Anti-JS
-                if (value === "object" || value === "tuple") throw new Error(`Type ${value} needs to use its object definition`)
+                    if (value === "object" || value === "tuple") throw new Error(`Type ${value} needs to use its object definition`)
+                        // {
+                        // errCode: "R403",
+                        // ref: true,
+                        // lineErr: {
+                        //     err: inspect({[key]: schema[key]}, false, null, true),
+                        //     marker: "Parsing:"
+                        // }
                 if (value === "array")
                     value = <ArrayField><unknown>{ type: value, required: false, elements: undefined }
                 else
