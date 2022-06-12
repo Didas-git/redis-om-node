@@ -42,14 +42,14 @@ export class Model<T extends Schema<SchemaDefinition>> {
             let value: SchemaDefinition[string] = schema[key]!;
             if (typeof value === "string") {
                 //@ts-expect-error Anti-JS
-                    if (value === "object" || value === "tuple") throw new Error(`Type ${value} needs to use its object definition`)
-                        // {
-                        // errCode: "R403",
-                        // ref: true,
-                        // lineErr: {
-                        //     err: inspect({[key]: schema[key]}, false, null, true),
-                        //     marker: "Parsing:"
-                        // }
+                if (value === "object" || value === "tuple") throw new Error(`Type ${value} needs to use its object definition`)
+                // {
+                // errCode: "R403",
+                // ref: true,
+                // lineErr: {
+                //     err: inspect({[key]: schema[key]}, false, null, true),
+                //     marker: "Parsing:"
+                // }
                 if (value === "array")
                     value = <ArrayField><unknown>{ type: value, required: false, elements: undefined }
                 else
@@ -59,7 +59,6 @@ export class Model<T extends Schema<SchemaDefinition>> {
                 if (!value.type) throw new Error("Type not defined");
                 if (value.type !== "array" && value.type !== "object" && value.type !== "tuple") {
                     if (!value.required) value.required = false;
-                    //@ts-expect-error TS can't figure this out
                     if (!value.default) value.default = undefined;
                 }
                 if (value.type === "array")

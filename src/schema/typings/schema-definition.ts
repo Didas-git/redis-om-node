@@ -12,22 +12,22 @@ export interface BaseField {
 
 export interface StringField extends BaseField {
     type: "string";
-    default?: string;
+    default?: string | undefined;
 }
 
 export interface NumberField extends BaseField {
     type: "number";
-    default?: number;
+    default?: number | undefined;
 }
 
 export interface BooleanField extends BaseField {
     type: "boolean";
-    default?: boolean;
+    default?: boolean | undefined;
 }
 
 export interface TextField extends BaseField {
     type: "text";
-    default?: string;
+    default?: string | undefined;
 }
 
 export interface DateField extends BaseField {
