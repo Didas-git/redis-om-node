@@ -1,6 +1,6 @@
 import { createClient } from "redis";
 import { describe, test, expect } from "vitest";
-import { client, Schema, Model } from "../index";
+import { client, Schema, Model } from "../src/index";
 
 client.connect();
 
@@ -13,15 +13,18 @@ const userModel = client.model("User", userSchema);
 
 describe("client", () => {
 
-    // test("connect")
+    test.todo("connect")
+    test.todo("disconnect")
+    test.todo("should be open")
+    test.todo("should be closed")
 
     test("create schema", () => {
-        expect(userSchema).toStrictEqual(new Schema({ name: { type: "string", default: undefined, required: false }, age: { type: "number", default: undefined, required: false } }))
+        expect(userSchema).toStrictEqual(new Schema({ name: "string", age: "number" }))
     })
 
 
     describe("model", () => {
-        test.skip("create model", () => {
+        test.todo("create model", () => {
             expect(userModel).toStrictEqual(new Model(userSchema, createClient()))
         })
 
@@ -37,7 +40,7 @@ describe("client", () => {
     })
 
     describe("document", () => {
-        test.skip("creates a new document with the properties and methods defined", () => {
+        test.todo("creates a new document with the properties and methods defined", () => {
             expect(client.model("User").create()).toBeDefined()
         })
     })

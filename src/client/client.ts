@@ -5,11 +5,11 @@ import { URLObject, RedisClient } from "./typings";
 
 export class Client {
     #client?: RedisClient;
-    #isOpen: boolean = false;
     #models: Map<string, Model<any>> = new Map();
+    public isOpen: boolean = false;
 
     public async connect(url: string | URLObject = "redis://localhost:6379"): Promise<Client> {
-        if (this.#isOpen) return this;
+        if (this.isOpen) return this;
 
         if (typeof url === "object") {
 
@@ -19,7 +19,7 @@ export class Client {
 
         this.#client = createClient({ url });
         this.#client.connect();
-        this.#isOpen = true;
+        this.isOpen = true;
 
         return this;
     }
@@ -27,14 +27,14 @@ export class Client {
     public async disconnect(): Promise<Client> {
         await this.#client?.quit();
 
-        this.#isOpen = false
+        this.isOpen = false
         return this;
     }
 
     public async forceDisconnect(): Promise<Client> {
         await this.#client?.disconnect();
 
-        this.#isOpen = false
+        this.isOpen = false
         return this;
     }
 
