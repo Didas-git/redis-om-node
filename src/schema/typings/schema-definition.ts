@@ -47,7 +47,7 @@ export interface ArrayField extends BaseField {
 
 export interface TupleField extends BaseField {
     type: "tuple";
-    elements: any;
+    elements: Array<keyof FieldMap>;
 }
 
 export interface ObjectField extends BaseField {

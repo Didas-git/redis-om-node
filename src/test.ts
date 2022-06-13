@@ -7,7 +7,7 @@ import { inspect } from "util";
         name: "string",
         age: "number",
         //@ts-ignore
-        address: "object"
+        address: "tuple"
     });
 
     const userModel = client.model("User", userSchema);
