@@ -6,7 +6,8 @@ export default defineConfig({
         coverage: {
             reporter: ["text", "html"],
             exclude: [
-                "spec/*"
+                "spec/*",
+                "src/*/typings/*"
             ]
         }
     }
