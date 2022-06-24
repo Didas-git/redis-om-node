@@ -1,5 +1,4 @@
 import { createClient } from "redis";
-import { describe, test, expect } from "vitest";
 import { client, Schema, Model } from "../src/index";
 
 client.connect();
