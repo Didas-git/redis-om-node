@@ -1,7 +1,9 @@
-import { Schema, SchemaDefinition } from "../schema";
+import { MapSchema, Schema, SchemaDefinition } from "../schema";
 import { Document } from "../document";
 import { RedisClient } from "../client";
 import { schemaData } from "../privates/symbols";
+
+type ExtractGeneric<Type> = Type extends Schema<infer X> ? X : never
 
 export class Model<T extends Schema<SchemaDefinition>> {
     private readonly schema: T;
@@ -9,7 +11,7 @@ export class Model<T extends Schema<SchemaDefinition>> {
         this.schema = data;
     }
 
-    public create() {
+    public create(): Document<ExtractGeneric<T>> & MapSchema<ExtractGeneric<T>> {
         const doc = new Document();
         Object.keys(this.schema[schemaData]).forEach((key) => {
             Object.defineProperty(doc, key, {
@@ -24,10 +26,10 @@ export class Model<T extends Schema<SchemaDefinition>> {
             })
         })
 
-        return doc
+        return <any>doc
     }
 
-    public save(doc: Document) {
+    public save(doc: Document<SchemaDefinition>) {
         if (!this.schema.options || this.schema.options === "JSON")
             //@ts-ignore JS Shenanigans
             this.client.json.set(this.schema.costructor.name, "$", JSON.parse(doc.toString()))

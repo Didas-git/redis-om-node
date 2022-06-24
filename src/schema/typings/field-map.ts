@@ -1,5 +1,5 @@
 import { Point } from "./point";
-import { SchemaDefinition } from "./schema-definition";
+import { FieldTypes, SchemaDefinition } from "./schema-definition";
 
 export interface FieldMap {
     string: string;
@@ -9,10 +9,10 @@ export interface FieldMap {
     date: Date;
     point: Point;
     array: Array<string | number | boolean>;
-    tuple: [any]
+    tuple: [SchemaDefinition]
     object: Record<string, SchemaDefinition>;
 }
 
-// export type MapSchema<T extends Schema<SchemaDefinition>> = {
-//     [K in keyof T[typeof schemaData]]: FieldMap[T[typeof schemaData][K]["type"]]
-// }
+export type MapSchema<T extends SchemaDefinition> = {
+    [K in keyof T]: T[K] extends FieldTypes ? FieldMap[T[K]["type"]] : FieldMap[T[K]]
+}

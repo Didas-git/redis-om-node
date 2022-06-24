@@ -43,12 +43,12 @@ export class Client {
     }
 
     public model<T extends Schema<SchemaDefinition>>(name: string, schema?: T): Model<T> {
-        if (this.#models.has(name)) return <any>this.#models.get(name)!;
+        if (this.#models.has(name)) return this.#models.get(name)!;
 
         if (!schema) throw new Error("You have to pass a schema if it doesnt exist");
 
         const model = new Model(schema, this.#client!);
         this.#models.set(name, model);
-        return <any>model;
+        return model;
     }
 }
