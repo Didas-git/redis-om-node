@@ -1,5 +1,4 @@
 import { client } from "./index";
-import { inspect } from "util";
 
 (async () => {
     // await client.connect();
@@ -8,13 +7,17 @@ import { inspect } from "util";
         age: "number",
         idkWhatToNameThis: {
             type: "tuple",
-            elements: ["string", "number"]
+            elements: ["string", "number", "array", { type: "object", data: { a: "string" } }] as const
         },
-        t: {
+        myObj: {
             type: "object",
             data: {
                 a: "string"
             }
+        },
+        randArr: {
+            type: "array",
+            elements: "number"
         }
     });
 
