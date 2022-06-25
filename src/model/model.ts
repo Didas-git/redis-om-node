@@ -2,8 +2,7 @@ import { MapSchema, Schema, SchemaDefinition } from "../schema";
 import { Document } from "../document";
 import { RedisClient } from "../client";
 import { schemaData } from "../privates/symbols";
-
-type ExtractGeneric<Type> = Type extends Schema<infer X> ? X : never
+import { ExtractSchemaGeneric } from "./typings";
 
 export class Model<T extends Schema<SchemaDefinition>> {
     private readonly schema: T;
@@ -11,7 +10,7 @@ export class Model<T extends Schema<SchemaDefinition>> {
         this.schema = data;
     }
 
-    public create(): Document<ExtractGeneric<T>> & MapSchema<ExtractGeneric<T>> {
+    public create(): Document<ExtractSchemaGeneric<T>> & MapSchema<ExtractSchemaGeneric<T>> {
         const doc = new Document();
         Object.keys(this.schema[schemaData]).forEach((key) => {
             Object.defineProperty(doc, key, {
