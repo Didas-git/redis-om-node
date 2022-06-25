@@ -5,15 +5,22 @@ import { inspect } from "util";
     // await client.connect();
     const userSchema = client.schema({
         name: "string",
-        age: "number"
+        age: "number",
+        idkWhatToNameThis: {
+            type: "tuple",
+            elements: ["string", "number"]
+        },
+        t: {
+            type: "object",
+            data: {
+                a: "string"
+            }
+        }
     });
 
     const userModel = client.model("User", userSchema);
-
-    console.log(inspect(userModel.create(), false, null, true));
-
     const doc = userModel.create()
 
-    doc.age
+    doc.idkWhatToNameThis
     // await client.disconnect();
 })()
