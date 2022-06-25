@@ -18,21 +18,16 @@ export type MapSchema<T extends SchemaDefinition> = {
     -readonly [K in keyof T]: T[K] extends ObjectField
     ? MapSchema<Exclude<T[K]["data"], undefined>>
     : T[K] extends ArrayField
-    ? FieldMap<FieldMap[Exclude<T[K]["elements"], undefined>]>["array"]
+    ? T[K]["elements"] extends SchemaDefinition
+    ? FieldMap<MapSchema<T[K]["elements"]>>["array"]
+    : FieldMap<FieldMap[Exclude<T[K]["elements"], undefined | SchemaDefinition>]>["array"]
     : T[K] extends TupleField
     ? FieldMap<DeconstructTuple<T[K]["elements"]>>["tuple"]
     : FieldMap[Exclude<T[K], FieldTypes>]
 }
 
 export type DeconstructTuple<T extends TupleField["elements"]> = {
-    [K in keyof T]: T[K] extends FieldTypes
-    ? T[K] extends ObjectField
-    ? MapSchema<Exclude<T[K]["data"], undefined>>
-    : T[K] extends ArrayField
-    ? FieldMap<FieldMap[Exclude<T[K]["elements"], undefined>]>["array"]
-    : T[K] extends TupleField
-    ? FieldMap<DeconstructTuple<T[K]["elements"]>>["tuple"]
-    : FieldMap[T[K]["type"]]
-    //@ts-expect-error
-    : FieldMap[T[K]]
+    [K in keyof T]: T[K] extends SchemaDefinition
+    ? MapSchema<T[K]>
+    : FieldMap[Exclude<T[K], SchemaDefinition>]
 }

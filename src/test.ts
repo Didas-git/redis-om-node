@@ -5,25 +5,17 @@ import { client } from "./index";
     const userSchema = client.schema({
         name: "string",
         age: "number",
-        idkWhatToNameThis: {
-            type: "tuple",
-            elements: ["string", "number", "array", { type: "object", data: { a: "string" } }] as const
-        },
-        myObj: {
-            type: "object",
-            data: {
-                a: "string"
-            }
-        },
-        randArr: {
+        friends: {
             type: "array",
-            elements: "number"
+            elements: {
+                id: "number"
+            }
         }
     });
 
     const userModel = client.model("User", userSchema);
     const doc = userModel.create()
 
-    doc.idkWhatToNameThis
+    doc.friends[0].id
     // await client.disconnect();
 })()

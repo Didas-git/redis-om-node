@@ -1,8 +1,8 @@
 import { FieldMap } from "./field-map";
 import { Point } from "./point";
 
-export type SchemaDefinition = Record<string, FieldDefinition>;
-export type FieldDefinition = keyof Omit<FieldMap, "object" | "tuple"> | FieldTypes
+export type SchemaDefinition = Record<string, keyof Omit<FieldMap, "object" | "tuple"> | FieldTypes>;
+export type TupleDefinition = keyof Omit<FieldMap, "object" | "tuple"> | SchemaDefinition
 
 export type FieldTypes = StringField | NumberField | BooleanField | TextField | DateField | PointField | ArrayField | TupleField | ObjectField;
 
@@ -43,12 +43,12 @@ export interface PointField extends BaseField {
 
 export interface ArrayField extends BaseField {
     type: "array";
-    elements?: keyof FieldMap | undefined;
+    elements?: keyof FieldMap | SchemaDefinition | undefined;
 }
 
 export interface TupleField extends BaseField {
     type: "tuple";
-    elements: readonly [...FieldDefinition[]];
+    elements: readonly [...TupleDefinition[] | SchemaDefinition[]];
 }
 
 export interface ObjectField extends BaseField {
