@@ -12,7 +12,7 @@ import { client } from "./index";
             }
         }
     }, {
-        newSave: async function () {
+        newSave: async function (s: string) {
             return <any>this.save
         }
     });
