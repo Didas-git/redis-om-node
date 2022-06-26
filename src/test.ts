@@ -11,11 +11,15 @@ import { client } from "./index";
                 id: "number"
             }
         }
+    }, {
+        newSave: async function () {
+            return <any>this.save
+        }
     });
 
-    const userModel = client.model("User", userSchema);
+    const userModel = client.model("User", userSchema)
     const doc = userModel.create()
 
-    doc.friends[0].id
+    doc.friends
     // await client.disconnect();
 })()

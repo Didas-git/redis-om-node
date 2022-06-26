@@ -1,6 +1,6 @@
 import { createClient } from "redis";
-import { Model } from "../model";
-import { Schema, SchemaDefinition } from "../schema";
+import { ExtractSchemaMethods, Model } from "../model";
+import { MethodsDefinition, Schema, SchemaDefinition, SchemaOptions } from "../schema";
 import { URLObject, RedisClient } from "./typings";
 
 export class Client {
@@ -38,17 +38,17 @@ export class Client {
         return this;
     }
 
-    public schema<T extends SchemaDefinition>(schemaData: T): Schema<T> {
-        return new Schema<T>(schemaData);
+    public schema<T extends SchemaDefinition, M extends MethodsDefinition>(schemaData: T, methods?: M, options?: SchemaOptions): Schema<T, M> {
+        return new Schema<T, M>(schemaData, methods, options);
     }
 
-    public model<T extends Schema<SchemaDefinition>>(name: string, schema?: T): Model<T> {
-        if (this.#models.has(name)) return this.#models.get(name)!;
+    public model<T extends Schema<SchemaDefinition, MethodsDefinition>>(name: string, schema?: T): Model<T> & ExtractSchemaMethods<T> {
+        if (this.#models.has(name)) return <any>this.#models.get(name)!;
 
         if (!schema) throw new Error("You have to pass a schema if it doesnt exist");
 
         const model = new Model(schema, this.#client!);
         this.#models.set(name, model);
-        return model;
+        return <any>model;
     }
 }

@@ -1,16 +1,20 @@
-import { MapSchema, Schema, SchemaDefinition } from "../schema";
+import { MapSchema, MethodsDefinition, Schema, SchemaDefinition } from "../schema";
 import { Document } from "../document";
 import { RedisClient } from "../client";
 import { schemaData } from "../privates/symbols";
-import { ExtractSchemaGeneric } from "./typings";
+import { ExtractSchemaDefinition } from "./typings";
 
-export class Model<T extends Schema<SchemaDefinition>> {
+export class Model<T extends Schema<SchemaDefinition, MethodsDefinition>> {
     private readonly schema: T;
     public constructor(data: T, private readonly client: RedisClient) {
         this.schema = data;
     }
 
-    public create(): Document<ExtractSchemaGeneric<T>> & MapSchema<ExtractSchemaGeneric<T>> {
+    // #defineMethods() {
+
+    // }
+
+    public create(): Document<ExtractSchemaDefinition<T>> & MapSchema<ExtractSchemaDefinition<T>> {
         const doc = new Document();
         Object.keys(this.schema[schemaData]).forEach((key) => {
             Object.defineProperty(doc, key, {
@@ -34,5 +38,9 @@ export class Model<T extends Schema<SchemaDefinition>> {
             this.client.json.set(this.schema.costructor.name, "$", JSON.parse(doc.toString()))
         else if (this.schema.options === "HASH")
             this.client.hSet(this.schema.constructor.name, "$", doc.toString());
+    }
+
+    public createAndSave() {
+
     }
 }
